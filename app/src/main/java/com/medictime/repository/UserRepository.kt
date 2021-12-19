@@ -17,7 +17,7 @@ class UserRepository(application: Application) {
         mUserDao = db.userDao()
     }
 
-    fun getUserByEmail(email: String): User = runBlocking { mUserDao.getUserByEmail(email) }
+    fun getUserByName(username: String): User = runBlocking { mUserDao.getUserByName(username) }
 
     fun isEmailRegistered(email: String): Boolean = runBlocking { mUserDao.isEmailRegistered(email) }
 

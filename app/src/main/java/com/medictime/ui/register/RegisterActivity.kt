@@ -15,6 +15,7 @@ import com.google.android.material.snackbar.Snackbar
 import com.medictime.App
 import com.medictime.databinding.ActivityRegisterBinding
 import com.medictime.preferences.UserPreferences
+import com.medictime.ui.login.LoginActivity
 import com.medictime.ui.main.MainActivity
 import java.time.OffsetDateTime
 
@@ -62,6 +63,14 @@ class RegisterActivity : AppCompatActivity() {
                 }
             }
         }
+
+        binding.loginBtn.setOnClickListener {
+            closeKeyboard()
+
+            val intent = Intent(this@RegisterActivity, LoginActivity::class.java)
+            startActivity(intent)
+            finish()
+        }
     }
 
     override fun onDestroy() {
@@ -74,7 +83,7 @@ class RegisterActivity : AppCompatActivity() {
             binding.root,
             text,
             Snackbar.LENGTH_SHORT)
-        .show()
+            .show()
     }
 
     private fun closeKeyboard() {
