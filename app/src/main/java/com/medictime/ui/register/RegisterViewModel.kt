@@ -27,5 +27,7 @@ class RegisterViewModel(application: Application, private val preferences: UserP
         mUserRepository.insert(user)
     }
 
-    fun isRegistered(email: String): Boolean = mUserRepository.isUserRegistered(email)
+    fun isEmailRegistered(email: String): Boolean = mUserRepository.isEmailRegistered(email)
+
+    fun isUsernameRegistered(userName: String): Boolean = mUserRepository.isUsernameRegistered(userName)
 }

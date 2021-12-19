@@ -15,5 +15,8 @@ interface UserDao {
     suspend fun getUserByEmail(email: String): User
 
     @Query("SELECT EXISTS (SELECT * from user WHERE email = :email)")
-    suspend fun isUserRegistered(email: String): Boolean
+    suspend fun isEmailRegistered(email: String): Boolean
+
+    @Query("SELECT EXISTS (SELECT * from user WHERE username = :username)")
+    suspend fun isUsernameRegistered(username: String): Boolean
 }

@@ -1,12 +1,45 @@
 package com.medictime.ui.main
 
+import android.content.Context
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.datastore.core.DataStore
+import androidx.datastore.preferences.core.Preferences
+import androidx.datastore.preferences.preferencesDataStore
+import androidx.lifecycle.ViewModelProvider
+import com.medictime.App
 import com.medictime.R
+import com.medictime.databinding.ActivityMainBinding
+import com.medictime.preferences.UserPreferences
+import java.time.OffsetDateTime
+import java.time.format.DateTimeFormatter
+import java.util.*
 
 class MainActivity : AppCompatActivity() {
+    private var _binding: ActivityMainBinding? = null
+    private val binding get() = _binding!!
+    private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = App.DATA_STORE_KEY)
+    private lateinit var preferences: UserPreferences
+    private lateinit var viewModel: MainViewModel
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        _binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+
+        preferences = UserPreferences.getInstance(dataStore)
+        viewModel = ViewModelProvider(this, MainViewModelFactory(preferences))[MainViewModel::class.java]
+
+        viewModel.getUserSetting().observe(this, { user ->
+            with(binding) {
+                headerName.text = user.name
+                headerDate.text = OffsetDateTime.now().format(DateTimeFormatter.ofPattern("EEEE, dd MMMM yyyy", Locale.getDefault()))
+            }
+        })
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        _binding = null
     }
 }

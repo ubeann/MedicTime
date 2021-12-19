@@ -7,14 +7,14 @@ import androidx.room.PrimaryKey
 import kotlinx.parcelize.Parcelize
 import java.time.OffsetDateTime
 
-@Entity
 @Parcelize
+@Entity(tableName = "user")
 data class User (
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "id")
     var id: Int = 0,
 
-    @ColumnInfo(name = "name")
+    @ColumnInfo(name = "username")
     var name: String,
 
     @ColumnInfo(name = "email")
