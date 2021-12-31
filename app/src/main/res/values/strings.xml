@@ -15,4 +15,6 @@
     <string name="does_not_have_an_account">Doesn\'t have an account?</string>
     <string name="log_in">LOG IN</string>
     <string name="add">Add</string>
+    <string name="your_today_s_activities">Your activities on %s</string>
+    <string name="medicine">%d medicine</string>
 </resources>
