@@ -86,7 +86,7 @@
             android:textColor="@color/black"
             app:layout_constraintTop_toBottomOf="@+id/header_date"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"/>
+            app:layout_constraintEnd_toStartOf="@+id/add_medicine"/>
 
         <TextView
             android:id="@+id/today_medicine"
@@ -98,9 +98,11 @@
             android:textColor="@color/orange_500"
             app:layout_constraintTop_toBottomOf="@+id/today_activity"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"/>
+            app:layout_constraintEnd_toStartOf="@+id/add_medicine"
+            app:layout_constraintHorizontal_chainStyle="packed"/>
 
         <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/list_medicine"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
@@ -109,25 +111,20 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             android:visibility="visible"
-            tools:listitem="@layout/card_medicine" />
+            tools:listitem="@layout/card_medicine"/>
 
-        <androidx.coordinatorlayout.widget.CoordinatorLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-            <!-- Main content -->
-            <com.google.android.material.floatingactionbutton.FloatingActionButton
-                android:id="@+id/add_medicine"
-                android:backgroundTint="@color/orange_500"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="bottom|right"
-                android:layout_margin="16dp"
-                android:contentDescription="@string/add"
-                app:srcCompat="@drawable/ic_baseline_add_24"
-                tools:ignore="RtlHardcoded" />
-
-        </androidx.coordinatorlayout.widget.CoordinatorLayout>
+        <Button
+            android:id="@+id/add_medicine"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="16dp"
+            android:text="@string/medicine_button"
+            app:icon="@drawable/ic_baseline_add_24"
+            app:layout_constraintBottom_toBottomOf="@+id/today_medicine"
+            app:layout_constraintStart_toEndOf="@+id/today_medicine"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_chainStyle="packed"
+            style="@style/Widget.MaterialComponents.Button.Icon"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

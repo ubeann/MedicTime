@@ -14,11 +14,16 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.MedicTime">
+        <activity
+            android:name=".ui.edit_medicine.EditMedicineActivity"
+            android:exported="false" />
+
         <receiver
             android:name=".helper.NotificationMedicine"
             android:enabled="true"
             android:exported="true"
             tools:ignore="ExportedReceiver" />
+
         <activity
             android:name=".ui.add_medicine.AddMedicineActivity"
             android:exported="false" />

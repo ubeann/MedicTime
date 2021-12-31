@@ -20,12 +20,16 @@ class MedicineRepository(application: Application) {
         mMedicineDao = db.medicineDao()
     }
 
-    fun getUserMedicine(userId: Int, dateTime: OffsetDateTime) : LiveData<List<UserMedicine>> = mMedicineDao.getUserMedicine(userId, dateTime)
+    fun getUserMedicine(userId: Int, dateTime: OffsetDateTime) : LiveData<List<UserMedicine>> = mMedicineDao.getUserMedicine(userId, dateTime, dateTime.plusDays(1))
 
     fun getLastMedicineUser(userId: Int) : Medicine = runBlocking { mMedicineDao.getLastMedicineUser(userId) }
 
     fun insert(vararg medicine: Medicine) {
         executorService.execute { mMedicineDao.insert(*medicine) }
+    }
+
+    fun update(vararg medicine: Medicine) {
+        executorService.execute { mMedicineDao.update(*medicine) }
     }
 
     fun delete(vararg medicine: Medicine) {

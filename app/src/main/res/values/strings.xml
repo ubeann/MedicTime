@@ -26,4 +26,5 @@
     <string name="time">Time of Reminder</string>
     <string name="medicine_amount">Amount</string>
     <string name="done">Done</string>
+    <string name="medicine_button">Medicine</string>
 </resources>
