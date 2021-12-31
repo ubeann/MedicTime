@@ -1,13 +1,15 @@
 package com.medictime.ui.main
 
 import android.content.Context
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.preferencesDataStore
 import androidx.lifecycle.ViewModelProvider
-import com.google.android.material.datepicker.*
+import com.google.android.material.datepicker.CalendarConstraints
+import com.google.android.material.datepicker.DateValidatorPointForward
+import com.google.android.material.datepicker.MaterialDatePicker
 import com.medictime.App
 import com.medictime.R
 import com.medictime.databinding.ActivityMainBinding
@@ -18,13 +20,14 @@ import java.time.LocalDateTime
 import java.time.OffsetDateTime
 import java.time.ZoneId
 import java.time.ZoneOffset
-import java.time.format.DateTimeFormatter
 import java.util.*
 
 class MainActivity : AppCompatActivity() {
     private var _binding: ActivityMainBinding? = null
     private val binding get() = _binding!!
     private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = App.DATA_STORE_KEY)
+    private val dateFormat = SimpleDateFormat("EEEE, dd MMMM yyyy", Locale.getDefault())
+    private val activityFormat = SimpleDateFormat("dd MMMM yyyy", Locale.getDefault())
     private var dayEpoch: Long = OffsetDateTime.now().toInstant().toEpochMilli()
     private lateinit var preferences: UserPreferences
     private lateinit var viewModel: MainViewModel
@@ -42,14 +45,22 @@ class MainActivity : AppCompatActivity() {
             user = dataUser
             with(binding) {
                 headerName.text = dataUser.name
-                headerDate.text = OffsetDateTime.now().format(DateTimeFormatter.ofPattern("EEEE, dd MMMM yyyy", Locale.getDefault()))
+                headerDate.text = dateFormat.format(dayEpoch)
+                todayActivity.text = resources.getString(R.string.your_today_s_activities, activityFormat.format(dayEpoch))
             }
         })
 
         binding.datePicker.setOnClickListener {
             val calendar = Calendar.getInstance()
             val start = LocalDateTime
-                .of(calendar.get(Calendar.YEAR) - 0, calendar.get(Calendar.MONTH) + 1, calendar.get(Calendar.DAY_OF_MONTH) - 0, 0, 0, 0,)
+                .of(
+                    calendar.get(Calendar.YEAR) - 0,
+                    calendar.get(Calendar.MONTH) + 1,
+                    calendar.get(Calendar.DAY_OF_MONTH) - 0,
+                    0,
+                    0,
+                    0,
+                )
                 .atZone(ZoneId.ofOffset("UTC", ZoneOffset.UTC))
                 .toInstant()
                 .toEpochMilli()
@@ -67,8 +78,9 @@ class MainActivity : AppCompatActivity() {
                 dayEpoch = it
 
                 // Preview
-                val dateFormat = SimpleDateFormat("EEEE, dd MMMM yyyy", Locale("in", "ID"))
-                binding.headerDate.text = dateFormat.format(it)
+                with(binding) {
+                    todayActivity.text = resources.getString(R.string.your_today_s_activities, activityFormat.format(dayEpoch))
+                }
             }
         }
     }
