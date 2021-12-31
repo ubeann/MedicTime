@@ -1,6 +1,7 @@
 package com.medictime.ui.add_medicine
 
 import android.app.Application
+import android.content.Context
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -8,6 +9,7 @@ import androidx.lifecycle.asLiveData
 import com.medictime.entity.Medicine
 import com.medictime.entity.User
 import com.medictime.helper.Event
+import com.medictime.helper.NotificationMedicine
 import com.medictime.preferences.UserPreferences
 import com.medictime.repository.MedicineRepository
 import com.medictime.repository.UserRepository
@@ -18,13 +20,14 @@ class AddMedicineViewModel(application: Application, private val preferences: Us
     private val mUserRepository: UserRepository = UserRepository(application)
     private val mMedicineRepository: MedicineRepository = MedicineRepository(application)
     private val _notificationText = MutableLiveData<Event<String>>()
+    private val notification: NotificationMedicine = NotificationMedicine()
     val notificationText: LiveData<Event<String>> = _notificationText
 
     fun getUserSetting(): LiveData<User> = preferences.getUserSetting().asLiveData()
 
     fun getUserIdByEmail(email: String): Int = mUserRepository.getUserByEmail(email).id
 
-    fun addMedicine(user_id: Int, medicine_name: String, medicine_type: String, medicine_description: String, medicine_date: OffsetDateTime, medicine_time: OffsetTime, medicine_amount: Int) {
+    fun addMedicine(context: Context, user_id: Int, medicine_name: String, medicine_type: String, medicine_description: String, medicine_date: OffsetDateTime, medicine_time: OffsetTime, medicine_amount: Int) {
         val data = Medicine(
             userId = user_id,
             name = medicine_name,
@@ -34,6 +37,13 @@ class AddMedicineViewModel(application: Application, private val preferences: Us
             amount = medicine_amount
         )
         mMedicineRepository.insert(data)
+        notification.set(
+            context,
+            mMedicineRepository.getLastMedicineUser(user_id).id,
+            "${data.amount}x ${data.name} (${data.type})",
+            data.description,
+            data.dateTime
+        )
         _notificationText.value = Event("Success add $medicine_name to database")
     }
 }

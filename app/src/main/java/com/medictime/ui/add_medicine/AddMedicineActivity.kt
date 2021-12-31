@@ -23,7 +23,6 @@ import com.google.android.material.timepicker.TimeFormat
 import com.medictime.App
 import com.medictime.R
 import com.medictime.databinding.ActivityAddMedicineBinding
-import com.medictime.entity.User
 import com.medictime.preferences.UserPreferences
 import java.text.SimpleDateFormat
 import java.time.*
@@ -163,6 +162,7 @@ class AddMedicineActivity : AppCompatActivity() {
 
                 if (isNameFilled and isTypeFilled and isDescriptionFilled and isDateFilled and isTimeFilled and isAmountFilled) {
                     viewModel.addMedicine(
+                        context = this@AddMedicineActivity,
                         user_id = userId,
                         medicine_name = inputName.editText?.text.toString(),
                         medicine_type = inputType.editText?.text.toString(),
