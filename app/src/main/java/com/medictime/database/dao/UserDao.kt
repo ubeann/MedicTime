@@ -11,6 +11,9 @@ interface UserDao {
     @Update
     fun update(user: User)
 
+    @Query("SELECT * from user WHERE email = :email ORDER BY id ASC LIMIT 1")
+    suspend fun getUserByEmail(email: String): User
+
     @Query("SELECT * from user WHERE username = :username ORDER BY id ASC LIMIT 1")
     suspend fun getUserByName(username: String): User
 

@@ -208,7 +208,6 @@
             android:text="@string/done"
             android:textSize="20sp"
             app:layout_constraintTop_toBottomOf="@id/input_amount"
-            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent" />
 

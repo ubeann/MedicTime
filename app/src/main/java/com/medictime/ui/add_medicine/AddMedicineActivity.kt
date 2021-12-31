@@ -2,7 +2,6 @@ package com.medictime.ui.add_medicine
 
 import android.app.Activity
 import android.content.Context
-import android.content.Intent
 import android.os.Bundle
 import android.text.TextUtils
 import android.view.inputmethod.InputMethodManager
@@ -17,6 +16,7 @@ import com.bumptech.glide.Glide
 import com.google.android.material.datepicker.CalendarConstraints
 import com.google.android.material.datepicker.DateValidatorPointForward
 import com.google.android.material.datepicker.MaterialDatePicker
+import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.textfield.TextInputLayout
 import com.google.android.material.timepicker.MaterialTimePicker
 import com.google.android.material.timepicker.TimeFormat
@@ -38,9 +38,9 @@ class AddMedicineActivity : AppCompatActivity() {
     private val timeFormat = DateTimeFormatter.ofPattern("HH:mm", Locale.getDefault())
     private var dayEpoch: Long = OffsetDateTime.now().toInstant().toEpochMilli()
     private var timeEpoch: OffsetTime = OffsetTime.now()
+    private var userId: Int = 0
     private lateinit var preferences: UserPreferences
     private lateinit var viewModel: AddMedicineViewModel
-    private lateinit var user: User
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -51,7 +51,7 @@ class AddMedicineActivity : AppCompatActivity() {
         viewModel = ViewModelProvider(this, AddMedicineViewModelFactory(application, preferences))[AddMedicineViewModel::class.java]
 
         viewModel.getUserSetting().observe(this, { dataUser ->
-            user = dataUser
+            userId = if (dataUser.email.isNotEmpty()) viewModel.getUserIdByEmail(dataUser.email) else 0
         })
 
         with(binding) {
@@ -162,6 +162,15 @@ class AddMedicineActivity : AppCompatActivity() {
                 val isAmountFilled = isInputFilled(inputAmount, "Please fill amount of medicine")
 
                 if (isNameFilled and isTypeFilled and isDescriptionFilled and isDateFilled and isTimeFilled and isAmountFilled) {
+                    viewModel.addMedicine(
+                        user_id = userId,
+                        medicine_name = inputName.editText?.text.toString(),
+                        medicine_type = inputType.editText?.text.toString(),
+                        medicine_description = inputDescription.editText?.text.toString(),
+                        medicine_date = OffsetDateTime.ofInstant(Instant.ofEpochMilli(dayEpoch), ZoneId.systemDefault()),
+                        medicine_time = timeEpoch,
+                        medicine_amount = inputAmount.editText?.text.toString().toInt()
+                    )
                     onBackPressed()
                 }
             }
@@ -171,6 +180,12 @@ class AddMedicineActivity : AppCompatActivity() {
             closeKeyboard()
             onBackPressed()
         }
+
+        viewModel.notificationText.observe(this, {
+            it.getContentIfNotHandled()?.let { text ->
+                showSnackBar(text)
+            }
+        })
     }
 
     override fun onDestroy() {
@@ -188,6 +203,14 @@ class AddMedicineActivity : AppCompatActivity() {
             view.isErrorEnabled = false
             true
         }
+    }
+
+    private fun showSnackBar(text: String) {
+        Snackbar.make(
+            binding.root,
+            text,
+            Snackbar.LENGTH_SHORT
+        ).show()
     }
 
     private fun closeKeyboard() {
