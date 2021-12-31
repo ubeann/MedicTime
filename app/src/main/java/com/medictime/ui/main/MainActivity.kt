@@ -1,6 +1,7 @@
 package com.medictime.ui.main
 
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.datastore.core.DataStore
@@ -15,6 +16,7 @@ import com.medictime.R
 import com.medictime.databinding.ActivityMainBinding
 import com.medictime.entity.User
 import com.medictime.preferences.UserPreferences
+import com.medictime.ui.add_medicine.AddMedicineActivity
 import java.text.SimpleDateFormat
 import java.time.LocalDateTime
 import java.time.OffsetDateTime
@@ -74,14 +76,16 @@ class MainActivity : AppCompatActivity() {
                 .build()
             picker.show(this.supportFragmentManager, DATE_PICKER_TAG)
             picker.addOnPositiveButtonClickListener {
-                // Save to data
                 dayEpoch = it
-
-                // Preview
                 with(binding) {
                     todayActivity.text = resources.getString(R.string.your_today_s_activities, activityFormat.format(dayEpoch))
                 }
             }
+        }
+
+        binding.addMedicine.setOnClickListener {
+            val intent = Intent(this@MainActivity, AddMedicineActivity::class.java)
+            startActivity(intent)
         }
     }
 

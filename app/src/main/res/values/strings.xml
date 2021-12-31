@@ -17,4 +17,13 @@
     <string name="add">Add</string>
     <string name="your_today_s_activities">Your activities on %s</string>
     <string name="medicine">%d medicine</string>
+    <string name="schedule_the_dose">Schedule the dose</string>
+    <string name="medicine_name">Medicine Name</string>
+    <string name="description">description</string>
+    <string name="medicine_type">Medicine Type</string>
+    <string name="medicine_description">Medicine Description</string>
+    <string name="date">Date of Reminder</string>
+    <string name="time">Time of Reminder</string>
+    <string name="medicine_amount">Amount</string>
+    <string name="done">Done</string>
 </resources>

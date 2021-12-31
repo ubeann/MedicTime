@@ -13,6 +13,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MedicTime">
         <activity
+            android:name=".ui.add_medicine.AddMedicineActivity"
+            android:exported="false" />
+        <activity
             android:name=".ui.login.LoginActivity"
             android:exported="false" />
         <activity
