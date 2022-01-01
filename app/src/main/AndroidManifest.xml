@@ -15,6 +15,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MedicTime">
         <activity
+            android:name=".ui.profile.ProfileActivity"
+            android:exported="false" />
+        <activity
             android:name=".ui.edit_medicine.EditMedicineActivity"
             android:exported="false" />
 

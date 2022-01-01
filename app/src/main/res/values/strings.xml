@@ -29,4 +29,9 @@
     <string name="medicine_button">Medicine</string>
     <string name="delete">Delete</string>
     <string name="save">Save</string>
+    <string name="update_schedule">Update Schedule</string>
+    <string name="profile">Profile</string>
+    <string name="old_password">Old Password</string>
+    <string name="new_password">New Password</string>
+    <string name="change_password">Change Password</string>
 </resources>

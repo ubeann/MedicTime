@@ -14,18 +14,12 @@ class LoginViewModel(application: Application, private val preferences: UserPref
     fun isRegistered(userName: String): Boolean = mUserRepository.isUsernameRegistered(userName)
 
     fun isUserPasswordMatch(userName: String, oldPassword: String): Boolean {
-        // Get User Data
         val user = mUserRepository.getUserByName(userName)
-
-        // Return
         return AESEncryption.decrypt(user.password.toString()) == oldPassword
     }
 
     fun login(userName: String) {
-        // Get User Data
         val user = mUserRepository.getUserByName(userName)
-
-        // Save User Data to Setting
         viewModelScope.launch {
             preferences.saveUserSetting(
                 userName = user.name,

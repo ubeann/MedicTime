@@ -22,6 +22,7 @@ import com.medictime.entity.relation.UserMedicine
 import com.medictime.preferences.UserPreferences
 import com.medictime.ui.add_medicine.AddMedicineActivity
 import com.medictime.ui.edit_medicine.EditMedicineActivity
+import com.medictime.ui.profile.ProfileActivity
 import java.text.SimpleDateFormat
 import java.time.*
 import java.util.*
@@ -104,6 +105,11 @@ class MainActivity : AppCompatActivity() {
 
         binding.addMedicine.setOnClickListener {
             val intent = Intent(this@MainActivity, AddMedicineActivity::class.java)
+            startActivity(intent)
+        }
+
+        binding.profile.setOnClickListener {
+            val intent = Intent(this@MainActivity, ProfileActivity::class.java)
             startActivity(intent)
         }
     }
