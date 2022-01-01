@@ -17,6 +17,7 @@ import com.medictime.App
 import com.medictime.databinding.ActivityProfileBinding
 import com.medictime.entity.User
 import com.medictime.preferences.UserPreferences
+import com.medictime.ui.about_us.AboutUsActivity
 import com.medictime.ui.login.LoginActivity
 
 class ProfileActivity : AppCompatActivity() {
@@ -48,16 +49,16 @@ class ProfileActivity : AppCompatActivity() {
         })
 
         binding.aboutUs.setOnClickListener {
-
+            val intent = Intent(this@ProfileActivity, AboutUsActivity::class.java)
+            startActivity(intent)
         }
 
         binding.btnLogout.setOnClickListener {
             closeKeyboard()
             viewModel.forgetUserLogin(true)
             val intent = Intent(this@ProfileActivity, LoginActivity::class.java)
-            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK)
+            finishAffinity()
             startActivity(intent)
-            finish()
         }
 
         binding.btnSave.setOnClickListener {
@@ -73,8 +74,8 @@ class ProfileActivity : AppCompatActivity() {
                 if (isUsernameFilled and isUsernameValid and isEmailFilled and isEmailValid and isPhoneFilled) {
                     viewModel.updateProfile(
                         user,
-                        inputUsername.editText?.text.toString().trim(),
-                        inputEmail.editText?.text.toString().trim(),
+                        inputUsername.editText?.text.toString().trim().lowercase(),
+                        inputEmail.editText?.text.toString().trim().lowercase(),
                         inputPhone.editText?.text.toString().trim()
                     )
                 }

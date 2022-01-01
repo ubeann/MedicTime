@@ -15,11 +15,22 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MedicTime">
         <activity
-            android:name=".ui.profile.ProfileActivity"
+            android:name=".ui.headquarter.HeadquarterActivity"
             android:exported="false" />
+
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="${MAPS_API_KEY}" />
+
+        <activity
+            android:name=".ui.about_us.AboutUsActivity"
+            android:exported="true" />
+        <activity
+            android:name=".ui.profile.ProfileActivity"
+            android:exported="true" />
         <activity
             android:name=".ui.edit_medicine.EditMedicineActivity"
-            android:exported="false" />
+            android:exported="true" />
 
         <receiver
             android:name=".helper.NotificationMedicine"

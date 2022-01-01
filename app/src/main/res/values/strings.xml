@@ -34,4 +34,8 @@
     <string name="old_password">Old Password</string>
     <string name="new_password">New Password</string>
     <string name="change_password">Change Password</string>
+    <string name="about_us">About Us</string>
+    <string name="about_us_text">MedRemind is an app created as the solution for a global medicine-nonadherence problem. We aim to help patients adhering their medicine schedules given by medical professionals. MedRemind works by reminding you to take your medicine with an alarm and notification as its primary method. If a medication has been going on too long, or if there will be a side effect when you consume a medicine with another, MedRemind will notify you. So you can consult with your medical professionals about the best thing to do if such things happen. We proud ourselves in creating an application that will benefit us all.</string>
+    <string name="our_headquarter">Our Headquarter</string>
+    <string name="detail">detail</string>
 </resources>
