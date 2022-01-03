@@ -66,9 +66,9 @@ class ProfileActivity : AppCompatActivity() {
 
             with(binding) {
                 val isUsernameFilled = isInputFilled(inputUsername, "Please fill your username")
-                val isUsernameValid = if (isUsernameFilled and (inputUsername.editText?.text.toString() != user.name)) isUsernameValid(inputUsername) else false
+                val isUsernameValid = if (isUsernameFilled and (inputUsername.editText?.text.toString() != user.name)) isUsernameValid(inputUsername) else true
                 val isEmailFilled = isInputFilled(inputEmail, "Please fill your email address")
-                val isEmailValid = if (isEmailFilled and (inputEmail.editText?.text.toString() != user.email)) isEmailValid(inputEmail) else false
+                val isEmailValid = if (isEmailFilled and (inputEmail.editText?.text.toString() != user.email)) isEmailValid(inputEmail) else true
                 val isPhoneFilled = isInputFilled(inputPhone, "Please fill your phone number")
 
                 if (isUsernameFilled and isUsernameValid and isEmailFilled and isEmailValid and isPhoneFilled) {

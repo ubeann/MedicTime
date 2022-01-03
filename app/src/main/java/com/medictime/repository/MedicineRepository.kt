@@ -8,6 +8,7 @@ import com.medictime.entity.Medicine
 import com.medictime.entity.relation.UserMedicine
 import kotlinx.coroutines.runBlocking
 import java.time.OffsetDateTime
+import java.util.concurrent.Callable
 import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
 
@@ -22,11 +23,7 @@ class MedicineRepository(application: Application) {
 
     fun getUserMedicine(userId: Int, dateTime: OffsetDateTime) : LiveData<List<UserMedicine>> = mMedicineDao.getUserMedicine(userId, dateTime, dateTime.plusDays(1))
 
-    fun getLastMedicineUser(userId: Int) : Medicine = runBlocking { mMedicineDao.getLastMedicineUser(userId) }
-
-    fun insert(vararg medicine: Medicine) {
-        executorService.execute { mMedicineDao.insert(*medicine) }
-    }
+    fun insert(medicine: Medicine) : Long = executorService.submit(Callable { mMedicineDao.insert(medicine) }).get()
 
     fun update(vararg medicine: Medicine) {
         executorService.execute { mMedicineDao.update(*medicine) }

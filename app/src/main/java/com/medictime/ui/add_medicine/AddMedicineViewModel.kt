@@ -36,10 +36,10 @@ class AddMedicineViewModel(application: Application, private val preferences: Us
             dateTime = medicine_time.atDate(medicine_date.toLocalDate()),
             amount = medicine_amount
         )
-        mMedicineRepository.insert(data)
+        val idMedicine = mMedicineRepository.insert(data).toInt()
         notification.set(
             context,
-            mMedicineRepository.getLastMedicineUser(user_id).id,
+            idMedicine,
             "${data.amount}x ${data.name} (${data.type})",
             data.description,
             data.dateTime
